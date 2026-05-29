@@ -12,12 +12,13 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./app.css?v=3" />
+    <link rel="stylesheet" href="./app.css?v=4" />
+    <link rel="stylesheet" href="./auth.css?v=1" />
   </head>
   <body>
     <div class="testnet-strip">
       <span class="pulse-dot"></span>
-      <span>Testnet · Simulated marks · Trading disabled</span>
+      <span>Testnet · Sign in with email · Simulated trading</span>
     </div>
 
     <div class="hl-app">
@@ -35,9 +36,7 @@
         </div>
         <div class="hl-nav-right">
           <span id="conn-status" class="hl-status feed-offline">Connecting</span>
-          <button class="hl-connect" type="button" disabled>
-            Connect
-          </button>
+          <div data-auth-nav></div>
         </div>
       </header>
 
@@ -185,7 +184,7 @@
           <div class="hl-field-row">
             <label class="hl-field">
               <span>Available</span>
-              <input type="text" value="— USDC" disabled />
+              <input type="text" id="trade-available" value="Sign in to view" disabled />
             </label>
           </div>
 
@@ -194,27 +193,27 @@
               <span>Size</span>
               <span class="hl-field-unit">USDC</span>
             </div>
-            <input type="number" placeholder="0.00" disabled />
+            <input type="number" id="trade-size" placeholder="0.00" min="0" step="1" disabled />
             <div class="hl-size-pills">
-              <button type="button" disabled>25%</button>
-              <button type="button" disabled>50%</button>
-              <button type="button" disabled>75%</button>
-              <button type="button" disabled>Max</button>
+              <button type="button" class="size-pct" data-pct="25" disabled>25%</button>
+              <button type="button" class="size-pct" data-pct="50" disabled>50%</button>
+              <button type="button" class="size-pct" data-pct="75" disabled>75%</button>
+              <button type="button" class="size-pct" data-pct="100" disabled>Max</button>
             </div>
           </label>
 
           <label class="hl-field">
             <div class="hl-field-top">
               <span>Leverage</span>
-              <strong class="lev-display mono">5x</strong>
+              <strong class="lev-display mono" id="lev-display">5x</strong>
             </div>
-            <input type="range" class="hl-lev-slider" min="1" max="20" value="5" disabled />
+            <input type="range" class="hl-lev-slider" id="trade-leverage" min="1" max="20" value="5" disabled />
             <div class="hl-lev-pills">
-              <button type="button" disabled>1x</button>
-              <button type="button" disabled>2x</button>
-              <button type="button" disabled>5x</button>
-              <button type="button" disabled>10x</button>
-              <button type="button" disabled>20x</button>
+              <button type="button" class="lev-pick" data-lev="1" disabled>1x</button>
+              <button type="button" class="lev-pick" data-lev="2" disabled>2x</button>
+              <button type="button" class="lev-pick" data-lev="5" disabled>5x</button>
+              <button type="button" class="lev-pick" data-lev="10" disabled>10x</button>
+              <button type="button" class="lev-pick" data-lev="20" disabled>20x</button>
             </div>
           </label>
 
@@ -225,11 +224,11 @@
             <div><span>Slippage</span><strong class="mono">Est.</strong></div>
           </div>
 
-          <button class="submit-btn long hl-submit" type="button" disabled>
-            Connect wallet to trade
+          <button class="submit-btn long hl-submit" id="trade-submit" type="button">
+            Sign in to trade
           </button>
 
-          <p class="hl-trade-note">Testnet MVP — orders simulated when wallet is enabled.</p>
+          <p class="hl-trade-note" id="trade-note">Testnet — simulated orders · no real funds</p>
         </section>
       </main>
 
@@ -253,12 +252,12 @@
                 <th>Liq. Price</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="hl-empty-row">
+            <tbody id="positions-body">
+              <tr class="hl-empty-row" id="positions-empty">
                 <td colspan="7">
                   <div class="hl-empty">
                     <p>No open positions</p>
-                    <span>Connect wallet on Arbitrum Sepolia (Phase 2)</span>
+                    <span>Sign in and place a test trade</span>
                   </div>
                 </td>
               </tr>
@@ -269,6 +268,7 @@
     </div>
 
     <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="./app.js?v=4"></script>
+    <script src="./auth.js?v=1"></script>
+    <script src="./app.js?v=5"></script>
   </body>
 </html>

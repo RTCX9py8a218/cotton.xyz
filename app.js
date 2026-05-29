@@ -56,7 +56,18 @@ const els = {
   marketSymbol: document.getElementById("market-symbol"),
   pairMenu: document.getElementById("pair-menu"),
   pairTrigger: document.getElementById("pair-trigger"),
+  tradeAvailable: document.getElementById("trade-available"),
+  tradeSize: document.getElementById("trade-size"),
+  tradeLeverage: document.getElementById("trade-leverage"),
+  levDisplay: document.getElementById("lev-display"),
+  tradeSubmit: document.getElementById("trade-submit"),
+  tradeNote: document.getElementById("trade-note"),
+  positionsBody: document.getElementById("positions-body"),
+  positionsEmpty: document.getElementById("positions-empty"),
 };
+
+let activeSide = "long";
+let currentLeverage = 5;
 
 const chartState = {
   baseline: null,
@@ -452,6 +463,7 @@ function renderUpdate(data) {
     }
 
     renderOrderBook(view.bids || [], view.asks || []);
+    if (window.CottonAuth?.isSignedIn()) renderPositions();
   } catch (err) {
     console.error("renderUpdate failed", err);
     setFeedStatus("offline", "Feed Error");
@@ -669,14 +681,194 @@ document.querySelectorAll(".side-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".side-btn").forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
-    const submit = document.querySelector(".submit-btn");
-    if (!submit) return;
-    submit.classList.remove("long", "short");
-    submit.classList.add(btn.dataset.side);
-    submit.textContent =
-      btn.dataset.side === "long" ? "Connect wallet to long" : "Connect wallet to short";
+    activeSide = btn.dataset.side;
+    updateTradeUi();
   });
 });
+
+function setTradeEnabled(enabled) {
+  const fields = [
+    els.tradeSize,
+    els.tradeLeverage,
+    ...document.querySelectorAll(".size-pct"),
+    ...document.querySelectorAll(".lev-pick"),
+  ];
+  fields.forEach((el) => {
+    if (el) el.disabled = !enabled;
+  });
+}
+
+function updateTradeUi() {
+  const signedIn = window.CottonAuth?.isSignedIn();
+  const account = signedIn ? window.CottonAuth.getActiveAccount() : null;
+  const avail = account?.tradingBalance ?? 0;
+
+  if (els.tradeAvailable) {
+    els.tradeAvailable.value = signedIn
+      ? `${avail.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USDC`
+      : "Sign in to view";
+  }
+
+  setTradeEnabled(Boolean(signedIn && avail > 0));
+
+  if (els.tradeSubmit) {
+    if (!signedIn) {
+      els.tradeSubmit.disabled = false;
+      els.tradeSubmit.textContent = "Sign in to trade";
+      els.tradeSubmit.className = "submit-btn long hl-submit";
+    } else if (avail <= 0) {
+      els.tradeSubmit.disabled = false;
+      els.tradeSubmit.textContent = "Get test funds";
+      els.tradeSubmit.className = "submit-btn long hl-submit";
+    } else {
+      els.tradeSubmit.disabled = false;
+      els.tradeSubmit.textContent = activeSide === "long" ? "Long" : "Short";
+      els.tradeSubmit.className = `submit-btn ${activeSide} hl-submit`;
+    }
+  }
+
+  if (els.tradeNote) {
+    els.tradeNote.textContent = signedIn
+      ? "Testnet — simulated orders · no real funds"
+      : "Sign in with email to practice trading on testnet";
+  }
+
+  renderPositions();
+}
+
+function renderPositions() {
+  if (!els.positionsBody) return;
+  const account = window.CottonAuth?.getActiveAccount();
+  const positions = account?.positions || [];
+
+  if (!positions.length) {
+    els.positionsBody.innerHTML = `
+      <tr class="hl-empty-row" id="positions-empty">
+        <td colspan="7">
+          <div class="hl-empty">
+            <p>No open positions</p>
+            <span>${window.CottonAuth?.isSignedIn() ? "Place a test trade above" : "Sign in and place a test trade"}</span>
+          </div>
+        </td>
+      </tr>`;
+    return;
+  }
+
+  els.positionsBody.innerHTML = positions
+    .map((pos) => {
+      const mark = lastPayload ? resolvePairView(lastPayload).mark : pos.entryPrice;
+      const pnl =
+        pos.side === "long"
+          ? ((mark - pos.entryPrice) / pos.entryPrice) * pos.notional
+          : ((pos.entryPrice - mark) / pos.entryPrice) * pos.notional;
+      const roe = pos.margin > 0 ? (pnl / pos.margin) * 100 : 0;
+      const pnlClass = pnl >= 0 ? "up" : "down";
+      const sizeLabel = `${pos.side === "long" ? "+" : "−"}${fmt(pos.notional, 0)}`;
+      return `
+        <tr>
+          <td>${pos.pair.split("/")[0]}</td>
+          <td class="mono ${pos.side === "long" ? "up" : "down"}">${sizeLabel}</td>
+          <td class="mono">${fmt(pos.notional, 2)}</td>
+          <td class="mono">${fmt(pos.entryPrice)}</td>
+          <td class="mono">${fmt(mark)}</td>
+          <td class="mono ${pnlClass}">${fmt(pnl, 2)} (${fmtPct(roe, 2)})</td>
+          <td class="mono">—</td>
+        </tr>`;
+    })
+    .join("");
+}
+
+function handleTradeSubmit() {
+  if (!window.CottonAuth?.isSignedIn()) {
+    window.CottonAuth.openSignIn();
+    return;
+  }
+
+  const user = window.CottonAuth.getUser();
+  const account = window.CottonAuth.getActiveAccount();
+  if (!account) return;
+
+  if (account.tradingBalance <= 0) {
+    window.CottonAuth.fundTestAccount();
+    updateTradeUi();
+    return;
+  }
+
+  const size = Number(els.tradeSize?.value);
+  if (!Number.isFinite(size) || size <= 0) {
+    if (els.tradeNote) els.tradeNote.textContent = "Enter a size in USDC.";
+    return;
+  }
+  if (size > account.tradingBalance) {
+    if (els.tradeNote) els.tradeNote.textContent = "Size exceeds available balance.";
+    return;
+  }
+
+  const mark = lastPayload ? resolvePairView(lastPayload).mark : null;
+  if (!mark || !Number.isFinite(mark)) {
+    if (els.tradeNote) els.tradeNote.textContent = "Waiting for market price…";
+    return;
+  }
+
+  const lev = currentLeverage;
+  const margin = size / lev;
+  const notional = size;
+
+  account.tradingBalance -= margin;
+  account.ordersBalance += margin;
+  account.positions.push({
+    id: `${Date.now()}`,
+    pair: activePair,
+    side: activeSide,
+    entryPrice: mark,
+    notional,
+    margin,
+    leverage: lev,
+    openedAt: Date.now(),
+  });
+
+  window.CottonAuth.saveAccount(user.email, account);
+  if (els.tradeSize) els.tradeSize.value = "";
+  if (els.tradeNote) els.tradeNote.textContent = `Test ${activeSide} opened · simulated fill at ${fmt(mark)}`;
+  updateTradeUi();
+}
+
+function onAuthChange() {
+  updateTradeUi();
+}
+
+document.querySelectorAll(".size-pct").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const account = window.CottonAuth?.getActiveAccount();
+    if (!account) return;
+    const pct = Number(btn.dataset.pct) / 100;
+    const size = account.tradingBalance * pct;
+    if (els.tradeSize) els.tradeSize.value = Math.floor(size);
+  });
+});
+
+document.querySelectorAll(".lev-pick").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const lev = Number(btn.dataset.lev);
+    currentLeverage = lev;
+    if (els.tradeLeverage) els.tradeLeverage.value = String(lev);
+    if (els.levDisplay) els.levDisplay.textContent = `${lev}x`;
+  });
+});
+
+if (els.tradeLeverage) {
+  els.tradeLeverage.addEventListener("input", () => {
+    currentLeverage = Number(els.tradeLeverage.value) || 5;
+    if (els.levDisplay) els.levDisplay.textContent = `${currentLeverage}x`;
+  });
+}
+
+if (els.tradeSubmit) {
+  els.tradeSubmit.addEventListener("click", handleTradeSubmit);
+}
+
+window.CottonAuth?.init({ onSignIn: onAuthChange, onSignOut: onAuthChange });
+updateTradeUi();
 
 initChart();
 startMarketFeed();

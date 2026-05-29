@@ -1,6 +1,4 @@
-const STORAGE_KEY = "cotton_earn_state_v1";
 const VAULT_APY = 0.045;
-const DEFAULT_TRADING = 10_000;
 const ACCRUAL_INTERVAL_MS = 2000;
 
 const els = {
@@ -20,49 +18,6 @@ const els = {
 };
 
 let actionMode = "deposit";
-let state = loadState();
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return normalizeState(parsed);
-    }
-  } catch {
-    /* use default */
-  }
-  return defaultState();
-}
-
-function defaultState() {
-  return {
-    tradingBalance: DEFAULT_TRADING,
-    ordersBalance: 0,
-    earningBalance: 0,
-    accruedYield: 0,
-    lastAccrualTs: Date.now(),
-  };
-}
-
-function normalizeState(s) {
-  return {
-    tradingBalance: num(s.tradingBalance, DEFAULT_TRADING),
-    ordersBalance: num(s.ordersBalance, 0),
-    earningBalance: num(s.earningBalance, 0),
-    accruedYield: num(s.accruedYield, 0),
-    lastAccrualTs: num(s.lastAccrualTs, Date.now()),
-  };
-}
-
-function num(v, fallback) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : fallback;
-}
-
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
 
 function fmtUsdc(value, digits = 2) {
   if (!Number.isFinite(value)) return "—";
@@ -76,44 +31,83 @@ function fmtPct(value) {
   return `${(value * 100).toFixed(2)}%`;
 }
 
-function totalAccountValue() {
-  return state.tradingBalance + state.ordersBalance + state.earningBalance + state.accruedYield;
+function getAccount() {
+  return window.CottonAuth?.getActiveAccount();
 }
 
-function accrueYield() {
+function getUser() {
+  return window.CottonAuth?.getUser();
+}
+
+function totalAccountValue(account) {
+  if (!account) return 0;
+  return account.tradingBalance + account.ordersBalance + account.earningBalance + account.accruedYield;
+}
+
+function accrueYield(account) {
+  if (!account) return;
   const now = Date.now();
-  const elapsedSec = Math.max(0, (now - state.lastAccrualTs) / 1000);
-  if (state.earningBalance > 0 && elapsedSec > 0) {
-    const yieldDelta = state.earningBalance * (VAULT_APY / 365 / 86400) * elapsedSec;
-    state.accruedYield += yieldDelta;
+  const elapsedSec = Math.max(0, (now - (account.lastAccrualTs || now)) / 1000);
+  if (account.earningBalance > 0 && elapsedSec > 0) {
+    const yieldDelta = account.earningBalance * (VAULT_APY / 365 / 86400) * elapsedSec;
+    account.accruedYield = (account.accruedYield || 0) + yieldDelta;
   }
-  state.lastAccrualTs = now;
-  saveState();
+  account.lastAccrualTs = now;
+  const user = getUser();
+  if (user) window.CottonAuth.saveAccount(user.email, account);
 }
 
 function render() {
-  accrueYield();
+  const signedIn = window.CottonAuth?.isSignedIn();
+  const account = getAccount();
+
+  if (signedIn && account) accrueYield(account);
+
+  const trading = signedIn ? account?.tradingBalance ?? 0 : 0;
+  const orders = signedIn ? account?.ordersBalance ?? 0 : 0;
+  const earning = signedIn ? account?.earningBalance ?? 0 : 0;
+  const accrued = signedIn ? account?.accruedYield ?? 0 : 0;
 
   els.vaultApy.textContent = fmtPct(VAULT_APY);
-  els.accruedYield.textContent = fmtUsdc(state.accruedYield, 4);
-  els.totalValue.textContent = fmtUsdc(totalAccountValue());
-  els.tradingBalance.textContent = fmtUsdc(state.tradingBalance);
-  els.ordersBalance.textContent = fmtUsdc(state.ordersBalance);
-  const earningText = fmtUsdc(state.earningBalance);
+  els.accruedYield.textContent = signedIn ? fmtUsdc(accrued, 4) : "—";
+  els.totalValue.textContent = signedIn ? fmtUsdc(totalAccountValue(account)) : "—";
+  els.tradingBalance.textContent = signedIn ? fmtUsdc(trading) : "Sign in to view";
+  els.ordersBalance.textContent = signedIn ? fmtUsdc(orders) : "—";
+  const earningText = signedIn ? fmtUsdc(earning) : "—";
   els.earningBalance.textContent = earningText;
   if (els.earningBalanceRow) els.earningBalanceRow.textContent = earningText;
 
   updateFormUi();
 }
 
-function availableForAction() {
+function availableForAction(account) {
+  if (!account) return 0;
   return actionMode === "deposit"
-    ? state.tradingBalance
-    : state.earningBalance + state.accruedYield;
+    ? account.tradingBalance
+    : account.earningBalance + (account.accruedYield || 0);
 }
 
 function updateFormUi() {
-  const avail = availableForAction();
+  const signedIn = window.CottonAuth?.isSignedIn();
+  const account = getAccount();
+  const avail = availableForAction(account);
+
+  if (!signedIn) {
+    els.earnFormHint.textContent = "Sign in to deposit or withdraw";
+    els.earnSubmit.textContent = "Sign in to continue";
+    els.earnSubmit.disabled = false;
+    if (els.earnAmount) els.earnAmount.disabled = true;
+    document.querySelectorAll(".earn-quick button").forEach((b) => {
+      b.disabled = true;
+    });
+    return;
+  }
+
+  if (els.earnAmount) els.earnAmount.disabled = false;
+  document.querySelectorAll(".earn-quick button").forEach((b) => {
+    b.disabled = false;
+  });
+
   els.earnFormHint.textContent =
     actionMode === "deposit"
       ? `Available to deposit: ${fmtUsdc(avail)}`
@@ -122,6 +116,7 @@ function updateFormUi() {
     actionMode === "deposit" ? "Deposit to Earn" : "Withdraw to Trading";
   els.earnSubmit.classList.toggle("long", actionMode === "deposit");
   els.earnSubmit.classList.toggle("short", actionMode === "withdraw");
+  els.earnSubmit.disabled = false;
 }
 
 function setMessage(text, kind = "info") {
@@ -141,7 +136,8 @@ function setActionMode(mode) {
 }
 
 function applyQuickPct(pct) {
-  const avail = availableForAction();
+  const account = getAccount();
+  const avail = availableForAction(account);
   const amount = (avail * pct) / 100;
   if (els.earnAmount) {
     els.earnAmount.value = amount > 0 ? amount.toFixed(2) : "";
@@ -150,6 +146,16 @@ function applyQuickPct(pct) {
 
 function handleSubmit(e) {
   e.preventDefault();
+
+  if (!window.CottonAuth?.isSignedIn()) {
+    window.CottonAuth.openSignIn();
+    return;
+  }
+
+  const user = getUser();
+  const account = getAccount();
+  if (!user || !account) return;
+
   const amount = Number(els.earnAmount?.value);
   if (!Number.isFinite(amount) || amount <= 0) {
     setMessage("Enter a valid amount.", "error");
@@ -157,37 +163,55 @@ function handleSubmit(e) {
   }
 
   if (actionMode === "deposit") {
-    if (amount > state.tradingBalance + 1e-9) {
+    if (amount > account.tradingBalance + 1e-9) {
       setMessage("Insufficient trading balance.", "error");
       return;
     }
-    state.tradingBalance -= amount;
-    state.earningBalance += amount;
+    account.tradingBalance -= amount;
+    account.earningBalance = (account.earningBalance || 0) + amount;
     setMessage(`Deposited ${fmtUsdc(amount)} to Earn vault.`, "success");
   } else {
-    const withdrawable = state.earningBalance + state.accruedYield;
+    const withdrawable = account.earningBalance + (account.accruedYield || 0);
     if (amount > withdrawable + 1e-9) {
       setMessage("Insufficient earning balance.", "error");
       return;
     }
     let remaining = amount;
-    const fromYield = Math.min(state.accruedYield, remaining);
-    state.accruedYield -= fromYield;
+    const fromYield = Math.min(account.accruedYield || 0, remaining);
+    account.accruedYield = (account.accruedYield || 0) - fromYield;
     remaining -= fromYield;
-    state.earningBalance -= remaining;
-    state.tradingBalance += amount;
+    account.earningBalance -= remaining;
+    account.tradingBalance += amount;
     setMessage(`Withdrew ${fmtUsdc(amount)} to Trading.`, "success");
   }
 
+  window.CottonAuth.saveAccount(user.email, account);
   if (els.earnAmount) els.earnAmount.value = "";
-  saveState();
   render();
 }
 
 function resetDemo() {
-  state = defaultState();
-  saveState();
+  if (!window.CottonAuth?.isSignedIn()) {
+    window.CottonAuth.openSignIn();
+    return;
+  }
+  const user = getUser();
+  const account = getAccount();
+  if (!user || !account) return;
+
+  account.tradingBalance = window.CottonAuth.TESTNET_FUND_AMOUNT;
+  account.ordersBalance = 0;
+  account.earningBalance = 0;
+  account.accruedYield = 0;
+  account.positions = [];
+  account.funded = true;
+  account.lastAccrualTs = Date.now();
+  window.CottonAuth.saveAccount(user.email, account);
   setMessage("Demo balances reset.", "info");
+  render();
+}
+
+function onAuthChange() {
   render();
 }
 
@@ -202,5 +226,6 @@ document.querySelectorAll(".earn-quick button").forEach((btn) => {
 els.earnForm?.addEventListener("submit", handleSubmit);
 els.resetDemo?.addEventListener("click", resetDemo);
 
+window.CottonAuth?.init({ onSignIn: onAuthChange, onSignOut: onAuthChange });
 render();
 setInterval(render, ACCRUAL_INTERVAL_MS);
