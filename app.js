@@ -470,9 +470,154 @@ async function bootstrapFromRest() {
     setFeedStatus("offline", "Waiting for feed");
     return false;
   } catch {
-    setFeedStatus("offline", "API offline — start backend");
     return false;
   }
+}
+
+const DEMO_BETA = { BRAZIL: 0.09025, AUSTRALIA: 0.028 };
+let demoTimer = null;
+
+const demoRand = (lo, hi) => lo + Math.random() * (hi - lo);
+
+function demoMedian(a, b, c) {
+  return [a, b, c].sort((x, y) => x - y)[1];
+}
+
+function demoBook(mid, levels = 14) {
+  const spread = mid * 0.0008;
+  const bestBid = mid - spread / 2;
+  const bestAsk = mid + spread / 2;
+  const bids = [];
+  const asks = [];
+  for (let i = 0; i < levels; i++) {
+    const step = mid * 0.0002 * i;
+    bids.push({ price: bestBid - step, size: Math.max(1, 80 + i * 25 + demoRand(-5, 5)) });
+    asks.push({ price: bestAsk + step, size: Math.max(1, 80 + i * 25 + demoRand(-5, 5)) });
+  }
+  const lastTrade = mid + demoRand(-spread / 3, spread / 3);
+  return {
+    bids,
+    asks,
+    best_bid: bids[0].price,
+    best_ask: asks[0].price,
+    last_trade: lastTrade,
+    mid: (bids[0].price + asks[0].price) / 2,
+  };
+}
+
+function demoPair(pairId, ice, beta, basisEma, basisTraded, fxField) {
+  const book = demoBook(Math.max(0.01, ice + beta + basisEma + basisTraded + demoRand(-0.008, 0.008)));
+  const c1 = ice + beta;
+  const c2 = c1 + basisEma;
+  const c3 = book.mid;
+  const mark = demoMedian(c1, c2, c3);
+  const payload = {
+    ...book,
+    pair: pairId,
+    mark,
+    oracle: c1,
+    ice_anchor: ice,
+    c1,
+    c2,
+    c3,
+    basis_structural: beta,
+    basis_ema: basisEma,
+    basis_traded: basisTraded,
+    basis_total: beta + basisEma,
+    impact_bid: book.best_bid,
+    impact_ask: book.best_ask,
+    mode: "fallback",
+    ts: Date.now() / 1000,
+    environment: "testnet",
+    network: "demo",
+    demo: true,
+  };
+  if (fxField) payload[fxField[0]] = fxField[1];
+  return payload;
+}
+
+const demoState = {
+  ice: 78.4,
+  basisEma: { US: 0, BRAZIL: 0, AUSTRALIA: 0 },
+  basisTraded: { BRAZIL: 0, AUSTRALIA: 0 },
+  fxUsdbrl: 5.5,
+  fxUsdaud: 0.65,
+};
+
+function demoTick() {
+  demoState.ice = Math.max(70, demoState.ice + demoRand(-0.04, 0.04));
+  demoState.basisEma.US += demoRand(-0.002, 0.002);
+  demoState.basisEma.BRAZIL += demoRand(-0.002, 0.002);
+  demoState.basisEma.AUSTRALIA += demoRand(-0.002, 0.002);
+  demoState.basisTraded.BRAZIL += demoRand(-0.003, 0.003);
+  demoState.basisTraded.AUSTRALIA += demoRand(-0.003, 0.003);
+  demoState.fxUsdbrl += demoRand(-0.002, 0.002);
+  demoState.fxUsdaud += demoRand(-0.001, 0.001);
+
+  const ice = demoState.ice;
+  const usBook = demoBook(Math.max(0.01, ice + demoState.basisEma.US + demoRand(-0.02, 0.02)));
+  const usMark = demoMedian(ice, ice + demoState.basisEma.US, usBook.mid);
+
+  const brPair = demoPair(
+    "BRAZIL/USDC",
+    ice,
+    DEMO_BETA.BRAZIL,
+    demoState.basisEma.BRAZIL,
+    demoState.basisTraded.BRAZIL,
+    ["fx_usdbrl", demoState.fxUsdbrl],
+  );
+  const auPair = demoPair(
+    "AUSTRALIA/USDC",
+    ice,
+    DEMO_BETA.AUSTRALIA,
+    demoState.basisEma.AUSTRALIA,
+    demoState.basisTraded.AUSTRALIA,
+    ["fx_usdaud", demoState.fxUsdaud],
+  );
+
+  renderUpdate({
+    mark: usMark,
+    oracle: ice,
+    ice_anchor: ice,
+    c1: ice,
+    c2: ice + demoState.basisEma.US,
+    c3: usBook.mid,
+    basis_ema: demoState.basisEma.US,
+    mode: "fallback",
+    ts: Date.now() / 1000,
+    environment: "testnet",
+    network: "demo",
+    demo: true,
+    external_price: ice + demoRand(-0.08, 0.08),
+    fx_usdbrl: demoState.fxUsdbrl,
+    fx_usdaud: demoState.fxUsdaud,
+    basis_structural_brazil: DEMO_BETA.BRAZIL,
+    basis_structural_australia: DEMO_BETA.AUSTRALIA,
+    basis_ema_brazil: demoState.basisEma.BRAZIL,
+    basis_ema_australia: demoState.basisEma.AUSTRALIA,
+    pairs: {
+      "US/USDC": { ...usBook, pair: "US/USDC", mark: usMark, oracle: ice, ice_anchor: ice },
+      "BRAZIL/USDC": brPair,
+      "AUSTRALIA/USDC": auPair,
+    },
+    ...usBook,
+  });
+  setFeedStatus("fallback", "Demo preview");
+}
+
+function startDemoFeed() {
+  if (demoTimer) return;
+  demoTick();
+  demoTimer = setInterval(demoTick, 1000);
+}
+
+async function startMarketFeed() {
+  const live = await bootstrapFromRest();
+  if (live) {
+    connectWs();
+    return;
+  }
+  startDemoFeed();
 }
 
 function connectWs() {
@@ -534,5 +679,4 @@ document.querySelectorAll(".side-btn").forEach((btn) => {
 });
 
 initChart();
-bootstrapFromRest();
-connectWs();
+startMarketFeed();
