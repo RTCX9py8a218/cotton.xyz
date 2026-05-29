@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cotton.xyz | Earn</title>
+    <meta name="theme-color" content="#0b0e11" />
+    <link rel="icon" href="./assets/cotton-logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css?v=3" />
+    <link rel="stylesheet" href="./earn.css?v=3" />
+  </head>
+  <body class="earn-page">
+    <div class="testnet-strip">
+      <span class="pulse-dot"></span>
+      <span>Testnet · Simulated USDC vault · Not real yield</span>
+    </div>
+
+    <div class="hl-app earn-app">
+      <header class="hl-nav">
+        <div class="hl-nav-left">
+          <a class="hl-logo" href="./index.html" aria-label="cotton.xyz home">
+            <img src="./assets/cotton-logo.png" alt="cotton.xyz" width="360" height="88" />
+          </a>
+          <nav class="hl-nav-links" aria-label="Primary">
+            <a class="hl-nav-link" href="./app.html">Trade</a>
+            <a class="hl-nav-link disabled" href="#" tabindex="-1">Markets</a>
+            <a class="hl-nav-link active" href="./earn.html">Earn</a>
+            <a class="hl-nav-link disabled" href="#" tabindex="-1">Portfolio</a>
+          </nav>
+        </div>
+        <div class="hl-nav-right">
+          <span class="hl-status feed-online">Testnet</span>
+          <button class="hl-connect" type="button" disabled>Connect</button>
+        </div>
+      </header>
+
+      <section class="earn-summary-bar">
+        <div class="earn-summary-left">
+          <h1>Earn on idle USDC</h1>
+          <span class="earn-summary-desc">Free collateral only · margin stays in Trading</span>
+        </div>
+        <div class="earn-summary-stats">
+          <div class="earn-stat">
+            <span class="earn-stat-label">Vault APY</span>
+            <strong id="vault-apy" class="earn-stat-value mono">—</strong>
+          </div>
+          <div class="earn-stat">
+            <span class="earn-stat-label">Accrued yield</span>
+            <strong id="accrued-yield" class="earn-stat-value mono up">—</strong>
+          </div>
+          <div class="earn-stat">
+            <span class="earn-stat-label">Total value</span>
+            <strong id="total-value" class="earn-stat-value mono">—</strong>
+          </div>
+          <div class="earn-stat">
+            <span class="earn-stat-label">Earning</span>
+            <strong id="earning-balance" class="earn-stat-value mono up">—</strong>
+          </div>
+        </div>
+      </section>
+
+      <main class="earn-body">
+        <div class="earn-grid">
+          <section class="earn-panel earn-balances">
+            <div class="hl-panel-head">
+              <h2>Balances</h2>
+              <button type="button" class="earn-reset-btn" id="reset-demo">Reset demo</button>
+            </div>
+            <div class="earn-balance-rows">
+              <div class="earn-balance-row">
+                <div>
+                  <span class="earn-balance-label">Trading (available)</span>
+                  <span class="earn-balance-hint">Used for perps · not earning</span>
+                </div>
+                <strong id="trading-balance" class="mono">—</strong>
+              </div>
+              <div class="earn-balance-row">
+                <div>
+                  <span class="earn-balance-label">In open orders</span>
+                  <span class="earn-balance-hint">Reserved · not earning</span>
+                </div>
+                <strong id="orders-balance" class="mono">—</strong>
+              </div>
+              <div class="earn-balance-row highlight">
+                <div>
+                  <span class="earn-balance-label">Earning (vault)</span>
+                  <span class="earn-balance-hint">Idle USDC · testnet vault</span>
+                </div>
+                <strong id="earning-balance-row" class="mono up">—</strong>
+              </div>
+            </div>
+            <p class="earn-policy">
+              Only <strong>free trading balance</strong> can move to Earn. Withdraw back to Trading
+              before placing orders (instant in this demo).
+            </p>
+          </section>
+
+          <section class="earn-panel earn-actions">
+            <div class="hl-panel-head">
+              <h2>Deposit &amp; withdraw</h2>
+            </div>
+            <div class="earn-action-tabs">
+              <button type="button" class="earn-action-tab active" data-action="deposit">Deposit</button>
+              <button type="button" class="earn-action-tab" data-action="withdraw">Withdraw</button>
+            </div>
+            <form id="earn-form" class="earn-form">
+              <label class="hl-field">
+                <div class="hl-field-top">
+                  <span>Amount</span>
+                  <span class="hl-field-unit">USDC</span>
+                </div>
+                <input type="number" id="earn-amount" min="0" step="0.01" placeholder="0.00" />
+              </label>
+              <div class="hl-size-pills earn-quick">
+                <button type="button" data-pct="25">25%</button>
+                <button type="button" data-pct="50">50%</button>
+                <button type="button" data-pct="75">75%</button>
+                <button type="button" data-pct="100">Max</button>
+              </div>
+              <p id="earn-form-hint" class="earn-form-hint mono">Available to deposit: —</p>
+              <button type="submit" class="submit-btn long hl-submit" id="earn-submit">
+                Deposit to Earn
+              </button>
+            </form>
+            <p id="earn-message" class="earn-message" role="status"></p>
+          </section>
+
+          <section class="earn-panel earn-vault-info">
+            <div class="hl-panel-head">
+              <h2>Current vault</h2>
+              <span class="hl-badge hl-badge-warn">Testnet</span>
+            </div>
+            <div class="earn-vault-card active">
+              <div class="earn-vault-head">
+                <strong>USDC Base Vault</strong>
+                <span class="earn-vault-tag">Phase 1</span>
+              </div>
+              <p class="earn-vault-desc">
+                Simulated on-chain USDC yield (Morpho / Aave-class on Arbitrum at live testnet).
+              </p>
+              <ul class="earn-vault-meta">
+                <li><span>Asset</span><strong class="mono">USDC</strong></li>
+                <li><span>Chain</span><strong>Arbitrum</strong></li>
+                <li><span>Withdrawal</span><strong>Instant (demo)</strong></li>
+              </ul>
+            </div>
+            <div class="earn-vault-card future">
+              <div class="earn-vault-head">
+                <strong>SATA yield track</strong>
+                <span class="earn-vault-tag muted">Phase 3</span>
+              </div>
+              <p class="earn-vault-desc">
+                Future lane via dividend-backed partners (e.g. Apyx / Strive SATA). Not active in testnet.
+              </p>
+            </div>
+          </section>
+
+          <section class="earn-panel earn-disclaimer">
+            <div class="hl-panel-head">
+              <h2>Disclosures</h2>
+            </div>
+            <ul class="earn-disclaimer-list">
+              <li>Testnet balances are simulated — not real USDC or yield.</li>
+              <li>APY is indicative only and will vary on mainnet.</li>
+              <li>Earn does not cover margin posted to open positions.</li>
+              <li>SATA yield is a future product lane, not a current deposit.</li>
+              <li>Not FDIC insured. DeFi smart-contract risk applies when live.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="./earn.js?v=3"></script>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+{
+  "version": 3,
+  "generated_at": "2026-05-27T14:53:17.214833Z",
+  "recommended_model": "ice_plus_constant_504d_median",
+  "mark_formula": "Mark_Brazil = ICE + beta_const",
+  "panel": {
+    "start": "2000-01-03",
+    "end": "2018-05-08",
+    "n": 4440
+  },
+  "holdout_from": "2012-11-09",
+  "production_beta_const_usd_lb": 0.09024998474121099,
+  "acceptance_thresholds": {
+    "mae_basis_max_usd_lb": 0.06,
+    "vs_ice_improvement_min_pct": 15.0,
+    "within_5c_min_pct": 45.0
+  },
+  "acceptance_verdict": {
+    "passed": true,
+    "checks": {
+      "mae_basis_le_6c": true,
+      "beats_ice_by_15pct": true,
+      "within_5c_ge_45pct": true,
+      "r2_better_than_ice": true
+    },
+    "summary": "PASS \u2014 ICE + constant is an acceptable testnet anchor vs actual CEPEA. Traders price residual basis around the structural premium."
+  },
+  "models_holdout": {
+    "ice_only": {
+      "n": 1332,
+      "mae_basis": 0.07456636664015395,
+      "rmse_basis": 0.0903359176883986,
+      "mape_mark_pct": 94535.94597843707,
+      "r2_basis": -1.0721731871415736,
+      "pct_within_1pct": 4.57957957957958,
+      "pct_within_2c": 14.264264264264265,
+      "pct_within_5c": 35.585585585585584,
+      "dir_accuracy_pct": 0.0,
+      "mae_mark": 0.07456636664015395,
+      "rmse_mark": 0.0903359176883986,
+      "beta_const_mean": 0.02600002441406252
+    },
+    "static_median_train": {
+      "n": 1332,
+      "mae_basis": 0.058733021745882213,
+      "rmse_basis": 0.07387566964744198,
+      "mape_mark_pct": 98438.03940852646,
+      "r2_basis": -0.3858237167791101,
+      "pct_within_1pct": 6.231231231231231,
+      "pct_within_2c": 19.744744744744743,
+      "pct_within_5c": 45.42042042042042,
+      "dir_accuracy_pct": 0.0,
+      "mae_mark": 0.05873302174588223,
+      "rmse_mark": 0.07387566964744198,
+      "beta_const_mean": 0.02600002441406252
+    },
+    "static_mean_train": {
+      "n": 1332,
+      "mae_basis": 0.05607510769594735,
+      "rmse_basis": 0.07106649206559128,
+      "mape_mark_pct": 99282.9847570427,
+      "r2_basis": -0.28243359269712265,
+      "pct_within_1pct": 7.7327327327327335,
+      "pct_within_2c": 19.66966966966967,
+      "pct_within_5c": 48.4984984984985,
+      "dir_accuracy_pct": 0.0,
+      "mae_mark": 0.05607510769594735,
+      "rmse_mark": 0.07106649206559128,
+      "beta_const_mean": 0.03162927943662941
+    },
+    "rolling_504d_median": {
+      "n": 1332,
+      "mae_basis": 0.05332335030724693,
+      "rmse_basis": 0.06894936101824449,
+      "mape_mark_pct": 97889.59624260022,
+      "r2_basis": -0.20716217770551237,
+      "pct_within_1pct": 9.084084084084084,
+      "pct_within_2c": 23.273273273273272,
+      "pct_within_5c": 52.702702702702695,
+      "dir_accuracy_pct": 22.389181066867017,
+      "mae_mark": 0.05332335030724693,
+      "rmse_mark": 0.06894936101824449,
+      "beta_const_mean": 0.05689196840578371
+    }
+  },
+  "models_full_sample": {
+    "rolling_504d_median": {
+      "n": 4188,
+      "mae_basis": 0.06161628459558787,
+      "rmse_basis": 0.09012621975306415,
+      "mape_mark_pct": 31140.105270701355,
+      "r2_basis": 0.051163671440437986,
+      "pct_within_1pct": 8.166189111747851,
+      "pct_within_2c": 23.25692454632283,
+      "pct_within_5c": 52.05348615090736,
+      "dir_accuracy_pct": 21.805588727012182,
+      "mae_mark": 0.06161628459558787,
+      "rmse_mark": 0.09012621975306415,
+      "beta_const_mean": 0.03531088795593611
+    }
+  },
+  "rating_recommended": {
+    "grade": "C",
+    "score": 26.7,
+    "summary": "Acceptable MAE vs ICE \u2014 constant anchor viable for testnet with disclosed basis risk.",
+    "vs_ice_only_improvement_pct": 28.5,
+    "acceptable": true
+  },
+  "rating": {
+    "grade": "C",
+    "score": 26.7,
+    "summary": "Acceptable MAE vs ICE \u2014 constant anchor viable for testnet with disclosed basis risk.",
+    "vs_ice_only_improvement_pct": 28.5,
+    "acceptable": true
+  },
+  "test_metrics": {
+    "n": 1332,
+    "mae_basis": 0.05332335030724693,
+    "rmse_basis": 0.06894936101824449,
+    "mape_mark_pct": 97889.59624260022,
+    "r2_basis": -0.20716217770551237,
+    "pct_within_1pct": 9.084084084084084,
+    "pct_within_2c": 23.273273273273272,
+    "pct_within_5c": 52.702702702702695,
+    "dir_accuracy_pct": 22.389181066867017,
+    "mae_mark": 0.05332335030724693,
+    "rmse_mark": 0.06894936101824449,
+    "beta_const_mean": 0.05689196840578371
+  },
+  "baselines": {
+    "ice_only": {
+      "n": 1332,
+      "mae_basis": 0.07456636664015395,
+      "rmse_basis": 0.0903359176883986,
+      "mape_mark_pct": 94535.94597843707,
+      "r2_basis": -1.0721731871415736,
+      "pct_within_1pct": 4.57957957957958,
+      "pct_within_2c": 14.264264264264265,
+      "pct_within_5c": 35.585585585585584,
+      "dir_accuracy_pct": 0.0,
+      "mae_mark": 0.07456636664015395,
+      "rmse_mark": 0.0903359176883986,
+      "beta_const_mean": 0.02600002441406252
+    }
+  },
+  "params": {
+    "beta_const_usd_lb": 0.09024998474121099,
+    "method": "median",
+    "window_days": 504
+  },
+  "data_sources": {
+    "cepea": "https://raw.githubusercontent.com/royopa/cepea_scraper/master/bases/precos_cepea_base.csv",
+    "ice": "Yahoo Finance CT=F"
+  },
+  "limitations": [
+    "Constant captures structural premium only; residual basis (~10\u00a2 vol) is trader-discovered.",
+    "CEPEA CSV ends 2018-05-08.",
+    "ICE proxy is CT=F front future."
+  ]
+}

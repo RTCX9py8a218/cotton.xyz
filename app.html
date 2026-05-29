@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cotton.xyz | Trade</title>
+    <meta name="theme-color" content="#0b0e11" />
+    <link rel="icon" href="./assets/cotton-logo.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./app.css?v=3" />
+  </head>
+  <body>
+    <div class="testnet-strip">
+      <span class="pulse-dot"></span>
+      <span>Testnet · Simulated marks · Trading disabled</span>
+    </div>
+
+    <div class="hl-app">
+      <header class="hl-nav">
+        <div class="hl-nav-left">
+          <a class="hl-logo" href="./index.html" aria-label="cotton.xyz home">
+            <img src="./assets/cotton-logo.png" alt="cotton.xyz" width="360" height="88" />
+          </a>
+          <nav class="hl-nav-links" aria-label="Primary">
+            <a class="hl-nav-link active" href="./app.html">Trade</a>
+            <a class="hl-nav-link disabled" href="#" tabindex="-1">Markets</a>
+            <a class="hl-nav-link" href="./earn.html">Earn</a>
+            <a class="hl-nav-link disabled" href="#" tabindex="-1">Portfolio</a>
+          </nav>
+        </div>
+        <div class="hl-nav-right">
+          <span id="conn-status" class="hl-status feed-offline">Connecting</span>
+          <button class="hl-connect" type="button" disabled>
+            Connect
+          </button>
+        </div>
+      </header>
+
+      <section class="hl-market-bar">
+        <div class="hl-market-left">
+          <div class="hl-pair-wrap">
+            <button type="button" class="hl-pair-trigger" id="pair-trigger" aria-haspopup="listbox" aria-expanded="false">
+              <span class="hl-pair-symbol" id="market-symbol">US/USDC</span>
+              <span class="hl-pair-chevron" aria-hidden="true">▾</span>
+            </button>
+            <div class="hl-pair-menu hidden" id="pair-menu" role="listbox">
+              <button type="button" class="pair-btn active" data-pair="US/USDC" role="option">US/USDC</button>
+              <button type="button" class="pair-btn" data-pair="BRAZIL/USDC" role="option">BRAZIL/USDC</button>
+              <button type="button" class="pair-btn" data-pair="AUSTRALIA/USDC" role="option">AUSTRALIA/USDC</button>
+            </div>
+          </div>
+          <span class="hl-badge">Perp</span>
+          <span class="hl-badge hl-badge-warn">Testnet</span>
+        </div>
+
+        <div class="hl-stats-scroll">
+          <div class="hl-stat hl-stat-primary">
+            <span class="hl-stat-label">Mark</span>
+            <strong id="mark" class="hl-stat-value up mono">—</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">Oracle</span>
+            <strong id="oracle" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">Index</span>
+            <strong id="external-price" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">24h</span>
+            <strong id="change-24h" class="hl-stat-value up mono">—</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">Funding</span>
+            <strong id="funding" class="hl-stat-value mono">0.0100%</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">Spread</span>
+            <strong id="spread" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat origin-only hidden" data-fx-pair="BRAZIL/USDC">
+            <span class="hl-stat-label">ICE</span>
+            <strong id="ice-anchor" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat origin-only hidden">
+            <span class="hl-stat-label">Basis β</span>
+            <strong id="basis-model" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat origin-only hidden">
+            <span class="hl-stat-label">Basis EMA</span>
+            <strong id="basis-ema" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat origin-only hidden" data-fx-pair="BRAZIL/USDC">
+            <span class="hl-stat-label">USD/BRL</span>
+            <strong id="fx-usdbrl" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat origin-only hidden" data-fx-pair="AUSTRALIA/USDC">
+            <span class="hl-stat-label">AUD/USD</span>
+            <strong id="fx-usdaud" class="hl-stat-value mono">—</strong>
+          </div>
+          <div class="hl-stat">
+            <span class="hl-stat-label">Feed</span>
+            <strong id="oracle-mode" class="hl-feed-pill">—</strong>
+          </div>
+        </div>
+      </section>
+
+      <main class="hl-workspace">
+        <section class="hl-panel hl-chart-panel">
+          <div class="hl-chart-toolbar">
+            <div class="hl-toolbar-left">
+              <span class="hl-chart-title" id="chart-title">US/USDC</span>
+              <span class="hl-chart-sub" id="chart-sub">ICE · 1m</span>
+            </div>
+            <div class="hl-intervals">
+              <button type="button" class="hl-pill active" disabled>1m</button>
+              <button type="button" class="hl-pill" disabled>5m</button>
+              <button type="button" class="hl-pill" disabled>15m</button>
+              <button type="button" class="hl-pill" disabled>1h</button>
+            </div>
+            <div class="hl-legend">
+              <span class="leg leg-9">EMA 9</span>
+              <span class="leg leg-21">EMA 21</span>
+            </div>
+          </div>
+          <div class="hl-chart-area">
+            <div id="candle-chart" aria-label="Price chart"></div>
+          </div>
+          <details class="hl-mark-details">
+            <summary>Mark components</summary>
+            <div class="hl-mark-grid">
+              <div><span>C1</span><strong id="c1" class="mono">—</strong></div>
+              <div><span>C2</span><strong id="c2" class="mono">—</strong></div>
+              <div><span>C3</span><strong id="c3" class="mono">—</strong></div>
+              <div><span>Mid</span><strong id="mid" class="mono">—</strong></div>
+              <div><span>IPD</span><strong id="ipd" class="mono">—</strong></div>
+              <div><span>Imp Bid</span><strong id="impact-bid" class="mono">—</strong></div>
+              <div><span>Imp Ask</span><strong id="impact-ask" class="mono">—</strong></div>
+              <div><span>Last</span><strong id="last-trade" class="mono">—</strong></div>
+            </div>
+          </details>
+        </section>
+
+        <section class="hl-panel hl-book-panel">
+          <div class="hl-panel-head">
+            <h2>Order Book</h2>
+            <div class="hl-book-controls">
+              <span class="hl-book-pill active">0.0001</span>
+              <span class="hl-book-pill">USDC</span>
+            </div>
+          </div>
+          <div class="hl-book-head">
+            <span>Price (USD/lb)</span>
+            <span>Size</span>
+            <span>Total</span>
+          </div>
+          <div class="hl-book-stack">
+            <div id="book-asks" class="hl-book-side asks"></div>
+            <div class="hl-book-mid">
+              <div class="hl-book-mid-inner">
+                <span id="book-mid-price" class="hl-book-mid-price mono">—</span>
+                <span id="book-spread" class="hl-book-spread mono">—</span>
+              </div>
+            </div>
+            <div id="book-bids" class="hl-book-side bids"></div>
+          </div>
+        </section>
+
+        <section class="hl-panel hl-trade-panel">
+          <div class="hl-order-tabs">
+            <button type="button" class="hl-order-tab active" disabled>Market</button>
+            <button type="button" class="hl-order-tab" disabled>Limit</button>
+          </div>
+
+          <div class="hl-side-tabs">
+            <button type="button" class="side-btn long active" data-side="long">Long</button>
+            <button type="button" class="side-btn short" data-side="short">Short</button>
+          </div>
+
+          <div class="hl-field-row">
+            <label class="hl-field">
+              <span>Available</span>
+              <input type="text" value="— USDC" disabled />
+            </label>
+          </div>
+
+          <label class="hl-field">
+            <div class="hl-field-top">
+              <span>Size</span>
+              <span class="hl-field-unit">USDC</span>
+            </div>
+            <input type="number" placeholder="0.00" disabled />
+            <div class="hl-size-pills">
+              <button type="button" disabled>25%</button>
+              <button type="button" disabled>50%</button>
+              <button type="button" disabled>75%</button>
+              <button type="button" disabled>Max</button>
+            </div>
+          </label>
+
+          <label class="hl-field">
+            <div class="hl-field-top">
+              <span>Leverage</span>
+              <strong class="lev-display mono">5x</strong>
+            </div>
+            <input type="range" class="hl-lev-slider" min="1" max="20" value="5" disabled />
+            <div class="hl-lev-pills">
+              <button type="button" disabled>1x</button>
+              <button type="button" disabled>2x</button>
+              <button type="button" disabled>5x</button>
+              <button type="button" disabled>10x</button>
+              <button type="button" disabled>20x</button>
+            </div>
+          </label>
+
+          <div class="hl-trade-rows">
+            <div><span>Est. entry</span><strong id="est-entry" class="mono">—</strong></div>
+            <div><span>Liq. price</span><strong class="mono">—</strong></div>
+            <div><span>Margin</span><strong class="mono">—</strong></div>
+            <div><span>Slippage</span><strong class="mono">Est.</strong></div>
+          </div>
+
+          <button class="submit-btn long hl-submit" type="button" disabled>
+            Connect wallet to trade
+          </button>
+
+          <p class="hl-trade-note">Testnet MVP — orders simulated when wallet is enabled.</p>
+        </section>
+      </main>
+
+      <section class="hl-panel hl-bottom-panel">
+        <div class="hl-bottom-tabs">
+          <button type="button" class="bottom-tab active" data-tab="positions">Positions</button>
+          <button type="button" class="bottom-tab" data-tab="orders" disabled>Open Orders</button>
+          <button type="button" class="bottom-tab" data-tab="history" disabled>Trade History</button>
+          <button type="button" class="bottom-tab" data-tab="funding" disabled>Funding History</button>
+        </div>
+        <div class="hl-table-wrap">
+          <table class="hl-table">
+            <thead>
+              <tr>
+                <th>Coin</th>
+                <th>Size</th>
+                <th>Position Value</th>
+                <th>Entry Price</th>
+                <th>Mark Price</th>
+                <th>PnL (ROE %)</th>
+                <th>Liq. Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hl-empty-row">
+                <td colspan="7">
+                  <div class="hl-empty">
+                    <p>No open positions</p>
+                    <span>Connect wallet on Arbitrum Sepolia (Phase 2)</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="./app.js?v=3"></script>
+  </body>
+</html>

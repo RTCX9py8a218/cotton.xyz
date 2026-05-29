@@ -1,0 +1,16 @@
+{
+  "name": "cotton.xyz",
+  "short_name": "cotton",
+  "description": "The first perpetual DEX for cotton with 24/7 hedging.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/assets/cotton-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

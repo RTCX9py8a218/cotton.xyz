@@ -1,0 +1,247 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f8f5fc;
+  --surface-2: #f3eef9;
+  --text: #1a1228;
+  --muted: #5c5470;
+  --pink: #e840a5;
+  --violet: #6e43b8;
+  --violet-2: #8b56e9;
+  --border: rgba(110, 67, 184, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 12% -8%, rgba(232, 64, 165, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 88% 0%, rgba(139, 86, 233, 0.1) 0%, transparent 38%), var(--bg);
+  line-height: 1.6;
+}
+
+.container {
+  width: min(1120px, 92vw);
+  margin-inline: auto;
+}
+
+.bg-orb {
+  position: fixed;
+  width: 26rem;
+  height: 26rem;
+  filter: blur(90px);
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.orb-1 {
+  background: var(--pink);
+  top: -8rem;
+  left: -5rem;
+}
+
+.orb-2 {
+  background: var(--violet-2);
+  bottom: -12rem;
+  right: -7rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0 1.5rem;
+  gap: 1rem;
+  background: transparent;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.brand img {
+  height: clamp(112px, 17vw, 192px);
+  width: auto;
+  max-width: min(780px, 96vw);
+  object-fit: contain;
+}
+
+.nav nav {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.launch-app {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.05rem;
+  min-width: 128px;
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid rgba(110, 67, 184, 0.26);
+  background: linear-gradient(135deg, rgba(110, 67, 184, 0.1), rgba(232, 64, 165, 0.1));
+  color: #2c1a45;
+  text-decoration: none;
+  font-weight: 700;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.launch-app span {
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+.nav .launch-app {
+  color: #2c1a45;
+  font-weight: 700;
+}
+
+.nav .launch-app:hover {
+  color: #2c1a45;
+  border-color: rgba(110, 67, 184, 0.45);
+  box-shadow: 0 4px 14px rgba(110, 67, 184, 0.12);
+  transform: translateY(-1px);
+}
+
+.hero {
+  padding: 5rem 0 3rem;
+}
+
+.kicker {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--violet);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.15;
+  margin: 0.5rem 0 1rem;
+  max-width: 18ch;
+}
+
+.lead {
+  max-width: 72ch;
+  color: var(--muted);
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.hero-stats article,
+.card,
+.steps li {
+  border: 1px solid var(--border);
+  background: linear-gradient(160deg, rgba(142, 89, 215, 0.06), var(--surface));
+  border-radius: 16px;
+}
+
+.hero-stats article {
+  padding: 1rem 1.1rem;
+}
+
+.hero-stats h3 {
+  margin: 0;
+}
+
+.hero-stats p {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+}
+
+section {
+  margin: 2.1rem auto;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  margin: 0 0 0.9rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  padding: 1.2rem;
+}
+
+ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+}
+
+li {
+  margin: 0.4rem 0;
+}
+
+.flowchart {
+  margin: 0;
+  white-space: pre-wrap;
+  color: #3d2d5c;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.9rem;
+}
+
+.steps {
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.steps li {
+  padding: 0.9rem 1rem;
+}
+
+.footer {
+  color: var(--muted);
+  padding: 2.3rem 0 3rem;
+}
+
+@media (max-width: 900px) {
+  .grid-2,
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .brand img {
+    height: clamp(100px, 21vw, 140px);
+    max-width: min(560px, 92vw);
+  }
+
+  .nav nav {
+    display: none;
+  }
+
+  .launch-app {
+    min-width: 110px;
+    padding: 0.5rem 0.75rem;
+  }
+}

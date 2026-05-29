@@ -1,0 +1,11 @@
+{
+  "name": "cotton-landing",
+  "private": true,
+  "scripts": {
+    "preview": "npx --yes serve . -l 3000",
+    "dev:open": "bash scripts/dev.sh",
+    "api:install": "cd backend && python3 -m venv .venv && .venv/bin/pip install -r api/requirements.txt",
+    "api:dev": "cd backend && .venv/bin/python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8000",
+    "dev": "echo 'Run in two terminals: npm run api:dev  &&  npm run preview'"
+  }
+}

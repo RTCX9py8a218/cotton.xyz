@@ -1,0 +1,28 @@
+{
+  "version": 4,
+  "mark_model": "ICE + constant per origin",
+  "beta_const_usd_lb": 0.09024998474121099,
+  "method": "median",
+  "calibration_window_days": 504,
+  "calibrated_at": "2026-05-27T14:53:17.214560Z",
+  "source": "CEPEA algodao 8d minus ICE CT=F",
+  "governance_note": "Recalibrate quarterly; residual basis discovered on-book.",
+  "origins": {
+    "BRAZIL": {
+      "beta_const_usd_lb": 0.09024998474121099,
+      "method": "median",
+      "calibration_window_days": 504,
+      "calibrated_at": "2026-05-27T14:53:17.214560Z",
+      "source": "CEPEA algodao 8d minus ICE CT=F (504d median)",
+      "governance_note": "Recalibrate quarterly from CEPEA when available."
+    },
+    "AUSTRALIA": {
+      "beta_const_usd_lb": 0.028,
+      "method": "median",
+      "calibration_window_days": 504,
+      "calibrated_at": "2026-05-27T15:20:49.955593Z",
+      "source": "Industry ICE+basis guides; full backtest pending AU local series",
+      "governance_note": "Recalibrate from ABARES grower AUD/bale + FX when wired."
+    }
+  }
+}
