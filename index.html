@@ -3,31 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cotton.xyz | Institutional-Grade Cotton Perps</title>
+    <title>cotton.xyz | 24/7 Cotton Perpetuals</title>
     <meta
       name="description"
-      content="cotton.xyz — 24/7 ICE cotton perpetuals on Arbitrum. US/USDC at launch, BALE governance token, origin markets by community vote. Testnet preview live."
+      content="cotton.xyz — ICE-anchored cotton perpetuals on Arbitrum. Trade cotton 24/7 in USDC. App coming soon. Testnet preview available."
     />
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="https://cotton.xyz/" />
 
-  <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cotton.xyz/" />
-    <meta property="og:title" content="cotton.xyz | Institutional-Grade Cotton Perps" />
+    <meta property="og:title" content="cotton.xyz | 24/7 Cotton Perpetuals" />
     <meta
       property="og:description"
-      content="24/7 cotton perps anchored to ICE. US/USDC first on Arbitrum — origin markets and BALE governance coming via phased rollout."
+      content="The first perpetual exchange built for cotton — ICE-anchored, USDC-settled, always on."
     />
     <meta property="og:image" content="https://cotton.xyz/assets/cotton-logo.png" />
     <meta property="og:site_name" content="cotton.xyz" />
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="cotton.xyz | Institutional-Grade Cotton Perps" />
+    <meta name="twitter:title" content="cotton.xyz | 24/7 Cotton Perpetuals" />
     <meta
       name="twitter:description"
-      content="24/7 cotton perps anchored to ICE. US/USDC first on Arbitrum — origin markets and BALE governance coming via phased rollout."
+      content="The first perpetual exchange built for cotton — ICE-anchored, USDC-settled, always on."
     />
     <meta name="twitter:image" content="https://cotton.xyz/assets/cotton-logo.png" />
 
@@ -41,24 +39,18 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=2" />
+    <link rel="stylesheet" href="./styles.css?v=3" />
   </head>
   <body>
     <div class="bg-orb orb-1"></div>
     <div class="bg-orb orb-2"></div>
+
     <header class="container nav">
       <a class="brand" href="#top">
-        <img
-          src="./assets/cotton-logo.png"
-          alt="cotton.xyz logo"
-          width="780"
-          height="192"
-        />
+        <img src="./assets/cotton-logo.png" alt="cotton.xyz" width="780" height="192" />
       </a>
       <nav>
-        <a href="#plan">Plan</a>
-        <a href="#bale">BALE</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="#about">About</a>
         <a href="#preview">Preview</a>
       </nav>
       <a class="launch-app" href="#preview">
@@ -68,210 +60,86 @@
     </header>
 
     <main id="top">
-      <section class="container hero" id="purpose">
-        <p class="kicker">cotton.xyz · Arbitrum · Coming soon</p>
-        <h1>24/7 cotton perpetuals — ICE-anchored, built for hedgers.</h1>
+      <section class="container hero">
+        <p class="kicker">cotton.xyz</p>
+        <h1>Cotton perpetuals, always on.</h1>
         <p class="lead">
-          We are building the first dedicated cotton perp venue: <strong>US/USDC</strong> at
-          mainnet launch on <strong>Arbitrum</strong>, with marks that stay live when ICE is
-          closed via our order-book EMA model. Additional origin markets — Brazil, Australia,
-          and beyond — expand through <strong>BALE governance</strong>, not day-one complexity.
+          The first exchange purpose-built for cotton risk — anchored to
+          <strong>ICE Cotton No. 2</strong>, settled in <strong>USDC</strong>, and designed to
+          keep trading when traditional markets are closed.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="./app.html">Try testnet preview</a>
-          <a class="btn btn-secondary" href="#plan">Read the plan</a>
+          <a class="btn btn-secondary" href="./whitepaper.html">Read white paper</a>
         </div>
-        <p class="hero-note">Testnet preview uses simulated marks and email sign-in — not live trading or real funds.</p>
-        <div class="hero-stats">
-          <article>
-            <h3>Launch pair</h3>
-            <p>US/USDC · ICE Cotton No. 2 · 24/7</p>
-          </article>
-          <article>
-            <h3>Pricing</h3>
-            <p>ICE oracle + order-book EMA off-hours fallback</p>
-          </article>
-          <article>
-            <h3>Expansion</h3>
-            <p>Origin perps via BALE governance proposals</p>
-          </article>
-        </div>
+        <p class="hero-note">
+          Mainnet app coming soon. Preview uses simulated data — not live trading or real funds.
+        </p>
       </section>
 
-      <section class="container" id="plan">
-        <h2>Revised launch plan</h2>
-        <p class="section-lead">
-          Focused rollout: one liquid market first, aligned token economics, and governance-gated
-          origin expansion — designed for commodity users who do not live in crypto wallets.
-        </p>
-        <ol class="steps phase-steps">
-          <li>
-            <span class="phase-tag live">Live preview</span>
-            <strong>Testnet app</strong> — email sign-in, simulated US/USDC marks, practice trade &amp; earn UI.
-          </li>
-          <li>
-            <span class="phase-tag next">Mainnet v1</span>
-            <strong>US/USDC only</strong> — 24/7 perps vs USDC on Arbitrum; treasury + professional market makers for initial depth.
-          </li>
-          <li>
-            <span class="phase-tag later">Governance</span>
-            <strong>Origin markets</strong> — Brazil, Australia, and future regions added when BALE stakers approve proposals (β calibration, oracles, liquidity gates).
-          </li>
-          <li>
-            <span class="phase-tag later">Token</span>
-            <strong>BALE</strong> — staking-only at launch: fee share, 12-month alignment lock, governance rights — no public LP vault on day one.
-          </li>
-        </ol>
+      <section class="container grid-3" id="about">
+        <article class="card">
+          <h2>The gap</h2>
+          <p>
+            Cotton is a ~$45B global market, yet hedging still depends on session-bound venues
+            and fragmented regional basis. There is no dedicated 24/7 cotton perp built for how
+            the industry actually operates.
+          </p>
+        </article>
+        <article class="card">
+          <h2>What we build</h2>
+          <p>
+            A cotton perpetual DEX on <strong>Arbitrum</strong>: USDC collateral, ICE-referenced
+            marks, and a pricing engine that uses order-book signals when external feeds go
+            quiet — so the market does not sleep when ICE does.
+          </p>
+        </article>
+        <article class="card">
+          <h2>Status</h2>
+          <p>
+            <strong>Soft launch in progress.</strong> Testnet preview is live for UX and
+            pricing demos. Smart contracts and on-chain trading are not yet public. Details
+            for investors and partners are in our white paper.
+          </p>
+        </article>
       </section>
 
       <section class="container">
-        <h2>Investment highlights</h2>
-        <ol class="steps">
-          <li>First dedicated cotton perpetual venue — vertical focus in a ~$45B global market.</li>
-          <li>Disciplined launch: single pair liquidity before multi-origin sprawl.</li>
-          <li>BALE aligns long-term investors with protocol fees and market expansion votes.</li>
-          <li>Off-hours pricing IP (EMA + order-book fallback) built and running in the relayer today.</li>
+        <h2>Built for commodity users</h2>
+        <ol class="steps compact-steps">
+          <li><strong>Vertical focus</strong> — cotton only, not a generic perp clone.</li>
+          <li><strong>Simple collateral</strong> — USDC, with email-first onboarding on testnet.</li>
+          <li><strong>24/7 marks</strong> — ICE oracle when live; order-book EMA when it is not.</li>
         </ol>
-      </section>
-
-      <section class="container grid-2" id="problem">
-        <article class="card">
-          <h2>Problem</h2>
-          <ul>
-            <li>No efficient 24/7 hedging venue for cotton farmers, mills, and merchants.</li>
-            <li>Legacy ICE access is session-bound and operationally heavy for many participants.</li>
-            <li>Cross-origin basis risk (US, Brazil, India, Pakistan, Australia) remains structurally under-served.</li>
-            <li>DeFi commodity coverage is broad in narrative, narrow in execution.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h2 id="solution">Solution</h2>
-          <ul>
-            <li><strong>US/USDC</strong> — ICE Cotton No. 2 perpetual, USDC collateral, 24/7.</li>
-            <li>Mark engine: external ICE when fresh; <strong>order-book EMA fallback</strong> when markets are closed.</li>
-            <li>Email-first onboarding — no MetaMask required for commercial users at testnet.</li>
-            <li>Origin perps (Brazil, Australia) architected; activation via governance after US liquidity proves out.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="container grid-2" id="opportunity">
-        <article class="card">
-          <h2>Market Opportunity</h2>
-          <ul>
-            <li>Global cotton market size: $44-45B in 2026.</li>
-            <li>Annual cotton production: around 120 million bales.</li>
-            <li>ICE cotton futures average daily notional: about $1.2B.</li>
-            <li>RWA in DeFi: $30-36B and growing rapidly.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h2>Product mechanics (v1)</h2>
-          <ul>
-            <li>Single launch market: <strong>US/USDC</strong> on Arbitrum (Sepolia testnet now).</li>
-            <li>Reference mark: median(oracle, oracle + EMA(basis), book median) with per-tick clamps.</li>
-            <li>Collateral: USDC — familiar unit for mills, merchants, and funds.</li>
-            <li>Full app (wallet, on-chain settlement) — <strong>coming soon</strong>; preview is simulated.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="container" id="flow">
-        <h2>Differentiation</h2>
-        <ol class="steps">
-          <li>Category-defining venue: first dedicated cotton perpetual DEX.</li>
-          <li>Commercial-user first design: real hedgers, not only speculative flow.</li>
-          <li>Basis-risk aware architecture versus generic, single-index perp rails.</li>
-          <li>Email sign-in and “Hedge My Crop” UX — built for operators, not only crypto natives.</li>
-          <li>Governance-gated origin expansion — Brazil/Australia in testnet preview; mainnet via BALE vote.</li>
-        </ol>
-      </section>
-
-      <section class="container grid-2">
-        <article class="card">
-          <h2>Liquidity approach</h2>
-          <ul>
-            <li><strong>Phase 1:</strong> protocol treasury seed + professional market makers — not retail LP at launch.</li>
-            <li>Target tight US/USDC spreads before opening additional origin books.</li>
-            <li>Fee rebates and industry partnerships before token emissions.</li>
-            <li>Optional LP vault evaluated only if MM + treasury depth is insufficient.</li>
-          </ul>
-        </article>
-        <article class="card" id="bale">
-          <h2>BALE token (planned)</h2>
-          <ul>
-            <li><strong>Staking-only</strong> at launch — share of USDC trading fees, no public counterparty pool on day one.</li>
-            <li><strong>12-month lock</strong> for core stakers — long-term alignment with platform adoption.</li>
-            <li><strong>Governance:</strong> fee parameters, treasury spend caps, new origin listings, β_const updates.</li>
-            <li>Token not live — design phase; no public sale on this site.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="container grid-2" id="roadmap">
-        <article class="card">
-          <h2>Roadmap</h2>
-          <ul>
-            <li><strong>Now:</strong> testnet preview — marks, email sign-in, simulated trade &amp; earn.</li>
-            <li><strong>Next:</strong> Arbitrum Sepolia live testnet — contracts, US/USDC, hosted relayer.</li>
-            <li><strong>Mainnet v1:</strong> US/USDC 24/7 + BALE staking &amp; governance launch.</li>
-            <li><strong>Post-launch:</strong> origin markets (Brazil, Australia, …) via governance proposals.</li>
-            <li><strong>Later:</strong> fiat on-ramps, industry integrations, expanded commodity suite.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h2>Risk & Governance Framework</h2>
-          <ul>
-            <li>Oracle + EMA fallback with staleness rules and impact-price (IPD) controls.</li>
-            <li>BALE governance timelocks on parameter and origin-listing votes.</li>
-            <li>Operational focus on market integrity, uptime, and collateral safety.</li>
-          </ul>
-        </article>
-      </section>
-
-      <section class="container grid-2" id="investor">
-        <article class="card">
-          <h2>Why Now</h2>
-          <ul>
-            <li>Commodity participants increasingly require always-on risk transfer.</li>
-            <li>RWA adoption in DeFi has reached a scale where vertical specialization matters.</li>
-            <li>Basis-risk-aware product design creates a defensible edge over generic perps.</li>
-            <li>Stablecoin settlement rails now support global, continuous access.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h2>Use of Proceeds</h2>
-          <ul>
-            <li><strong>Product:</strong> US/USDC mainnet, relayer, email onboarding, on-chain settlement.</li>
-            <li><strong>Liquidity:</strong> treasury MM seed and market-maker partnerships.</li>
-            <li><strong>Distribution:</strong> commodity industry pilots (US first, origins via governance).</li>
-            <li><strong>Risk &amp; compliance:</strong> audits, insurance buffer, legal review for BALE.</li>
-          </ul>
-        </article>
       </section>
 
       <section class="container preview-section" id="preview">
         <div class="preview-card">
           <div>
             <p class="kicker">Testnet preview</p>
-            <h2>Try the coming-soon app today</h2>
+            <h2>Experience the app before launch</h2>
             <p>
-              Explore the trade terminal and earn UI with <strong>email sign-in</strong>, simulated
-              24/7 marks, and practice balances. This is a UX and pricing preview — not mainnet,
-              not financial advice, and not a token offer.
+              Sign in with email, view simulated 24/7 marks, and explore the trade and earn
+              interfaces. This preview is for product feedback only.
             </p>
           </div>
           <div class="preview-actions">
-            <a class="btn btn-primary" href="./app.html">Open Trade preview</a>
-            <a class="btn btn-secondary" href="./earn.html">Open Earn preview</a>
+            <a class="btn btn-primary" href="./app.html">Trade preview</a>
+            <a class="btn btn-secondary" href="./earn.html">Earn preview</a>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="container footer">
-      <p>© <span id="year"></span> cotton.xyz — Cotton perpetuals on Arbitrum. App coming soon.</p>
+      <p>© <span id="year"></span> cotton.xyz</p>
+      <p class="footer-disclaimer">
+        This site is for informational purposes only. Nothing here is an offer to sell or a
+        solicitation to buy any token or financial product. Testnet previews use simulated
+        balances and prices.
+      </p>
       <p class="footer-links">
+        <a href="./whitepaper.html">White paper</a>
         <a href="./app.html">Trade preview</a>
         <a href="./earn.html">Earn preview</a>
       </p>
