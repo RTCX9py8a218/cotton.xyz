@@ -39,7 +39,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=5" />
+    <link rel="stylesheet" href="./styles.css?v=6" />
   </head>
   <body>
     <div class="bg-orb orb-1"></div>
@@ -100,141 +100,159 @@
         <p class="section-lead">
           From the first harvest to the next chapter of open, global markets.
         </p>
-        <ol class="timeline">
-          <li class="timeline-item">
-            <span class="timeline-era">Ancient</span>
-            <time class="timeline-date">~5000 BCE</time>
-            <div class="timeline-content">
-              <h3>First cultivation</h3>
-              <p>
-                Cotton grown in the Indus Valley and coastal Peru — among humanity’s oldest
-                domesticated crops.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Ancient</span>
-            <time class="timeline-date">~3000 BCE</time>
-            <div class="timeline-content">
-              <h3>Ancient trade begins</h3>
-              <p>
-                Egyptian and Indian cotton textiles traded across empires; cotton becomes a
-                bridge between continents.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Ancient</span>
-            <time class="timeline-date">~500–900 CE</time>
-            <div class="timeline-content">
-              <h3>Global diffusion</h3>
-              <p>
-                Cotton knowledge spreads through the Islamic world to Spain and North Africa;
-                weaving and trade routes mature.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Medieval</span>
-            <time class="timeline-date">1300s</time>
-            <div class="timeline-content">
-              <h3>European expansion</h3>
-              <p>
-                Cotton cloth imports reshape Mediterranean and European commerce; demand begins
-                its long climb.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Industrial</span>
-            <time class="timeline-date">1793</time>
-            <div class="timeline-content">
-              <h3>Industrial leap</h3>
-              <p>
-                Eli Whitney’s cotton gin dramatically increases US production — cotton fuels an
-                industrial age.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Industrial</span>
-            <time class="timeline-date">1840s–1860s</time>
-            <div class="timeline-content">
-              <h3>Factory age</h3>
-              <p>
-                Mechanized spinning and weaving in Britain and New England; cotton becomes a
-                defining commodity of modern trade.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Markets</span>
-            <time class="timeline-date">1870</time>
-            <div class="timeline-content">
-              <h3>Organized futures</h3>
-              <p>
-                New York Cotton Exchange founded — benchmark pricing moves from local bargaining
-                toward centralized markets.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Markets</span>
-            <time class="timeline-date">1870s</time>
-            <div class="timeline-content">
-              <h3>Liverpool hub</h3>
-              <p>
-                Liverpool emerges as the world’s cotton trading capital, connecting American
-                growers to European mills.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Modern</span>
-            <time class="timeline-date">1970</time>
-            <div class="timeline-content">
-              <h3>ICE Cotton futures</h3>
-              <p>
-                Cotton futures consolidated on what becomes ICE Cotton No. 2 — today’s global
-                benchmark for world cotton prices.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Digital</span>
-            <time class="timeline-date">1990s–2000s</time>
-            <div class="timeline-content">
-              <h3>Electronic era</h3>
-              <p>
-                Screen-based trading replaces open outcry; markets get faster but stay bound to
-                session hours and institutional access.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item">
-            <span class="timeline-era">Today</span>
-            <time class="timeline-date">2000s–2020s</time>
-            <div class="timeline-content">
-              <h3>Access gap</h3>
-              <p>
-                ~120 million bales produced annually; farmers in many regions remain far from
-                transparent global pricing and hedging.
-              </p>
-            </div>
-          </li>
-          <li class="timeline-item timeline-item-now">
-            <span class="timeline-era">Next</span>
-            <time class="timeline-date">2026</time>
-            <div class="timeline-content">
-              <h3>cotton.xyz</h3>
-              <p>
-                Perpetual cotton markets on Arbitrum — ICE Oracle when live, Order Book when it
-                is not — opening global access to benchmark pricing and risk tools, 24/7, for
-                participants everywhere.
-              </p>
-            </div>
-          </li>
-        </ol>
+        <p class="timeline-hint" aria-hidden="true">Scroll the timeline →</p>
+        <div class="timeline-scroll" tabindex="0" aria-label="Cotton history timeline">
+          <ol class="timeline-rail">
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Ancient</span>
+                <h3>First cultivation</h3>
+                <p>Indus Valley &amp; Peru — among humanity’s oldest crops.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="-5000">~5000 BCE</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="-3000">~3000 BCE</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card">
+                <span class="timeline-era">Ancient</span>
+                <h3>Ancient trade</h3>
+                <p>Egypt &amp; India — cotton bridges continents.</p>
+              </article>
+            </li>
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Ancient</span>
+                <h3>Global diffusion</h3>
+                <p>Islamic world to Spain — routes mature.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="0700">~500–900 CE</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="1300">1300s</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card">
+                <span class="timeline-era">Medieval</span>
+                <h3>European expansion</h3>
+                <p>Mediterranean commerce reshaped by cotton imports.</p>
+              </article>
+            </li>
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Industrial</span>
+                <h3>Cotton gin</h3>
+                <p>1793 — US production surges; industry accelerates.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="1793">1793</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="1850">1840s–60s</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card">
+                <span class="timeline-era">Industrial</span>
+                <h3>Factory age</h3>
+                <p>Mechanized mills — cotton defines modern trade.</p>
+              </article>
+            </li>
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Markets</span>
+                <h3>NY Cotton Exchange</h3>
+                <p>1870 — centralized benchmark pricing begins.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="1870">1870</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="1875">1870s</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card">
+                <span class="timeline-era">Markets</span>
+                <h3>Liverpool hub</h3>
+                <p>World trading capital linking growers to mills.</p>
+              </article>
+            </li>
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Modern</span>
+                <h3>ICE Cotton</h3>
+                <p>1970 — global benchmark ICE Cotton No. 2.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="1970">1970</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="1995">1990s–2000s</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card">
+                <span class="timeline-era">Digital</span>
+                <h3>Electronic era</h3>
+                <p>Screen trading — still session-bound.</p>
+              </article>
+            </li>
+            <li class="timeline-node is-top">
+              <article class="timeline-card">
+                <span class="timeline-era">Today</span>
+                <h3>Access gap</h3>
+                <p>~120M bales/year — many far from global pricing.</p>
+              </article>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <div class="timeline-marker">
+                <time datetime="2010">2000s–20s</time>
+                <span class="timeline-dot"></span>
+              </div>
+            </li>
+            <li class="timeline-node is-bottom is-now">
+              <div class="timeline-marker">
+                <span class="timeline-dot"></span>
+                <time datetime="2026">2026</time>
+              </div>
+              <div class="timeline-stem" aria-hidden="true"></div>
+              <article class="timeline-card timeline-card-now">
+                <span class="timeline-era">Next</span>
+                <h3>cotton.xyz</h3>
+                <p>ICE Oracle when live, Order Book when not — 24/7 global access.</p>
+              </article>
+            </li>
+          </ol>
+        </div>
+        <div class="timeline-axis-labels" aria-hidden="true">
+          <span>~5000 BCE</span>
+          <span>2026 · cotton.xyz</span>
+        </div>
       </section>
 
       <section class="container">
