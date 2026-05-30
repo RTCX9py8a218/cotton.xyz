@@ -3,29 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>cotton.xyz | 24/7 Cotton Perpetuals</title>
+    <title>cotton.xyz | Global Cotton Markets for Everyone</title>
     <meta
       name="description"
-      content="cotton.xyz — ICE-anchored cotton perpetuals on Arbitrum. Trade cotton 24/7 in USDC. App coming soon. Testnet preview available."
+      content="cotton.xyz — opening global cotton pricing and hedging to farmers and traders everywhere. ICE-anchored perpetuals on Arbitrum. Testnet preview live."
     />
     <meta name="theme-color" content="#ffffff" />
     <link rel="canonical" href="https://cotton.xyz/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cotton.xyz/" />
-    <meta property="og:title" content="cotton.xyz | 24/7 Cotton Perpetuals" />
+    <meta property="og:title" content="cotton.xyz | Global Cotton Markets for Everyone" />
     <meta
       property="og:description"
-      content="The first perpetual exchange built for cotton — ICE-anchored, USDC-settled, always on."
+      content="Thousands of years of cotton trade — rebuilt for open, always-on global markets."
     />
     <meta property="og:image" content="https://cotton.xyz/assets/cotton-logo.png" />
     <meta property="og:site_name" content="cotton.xyz" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="cotton.xyz | 24/7 Cotton Perpetuals" />
+    <meta name="twitter:title" content="cotton.xyz | Global Cotton Markets for Everyone" />
     <meta
       name="twitter:description"
-      content="The first perpetual exchange built for cotton — ICE-anchored, USDC-settled, always on."
+      content="Thousands of years of cotton trade — rebuilt for open, always-on global markets."
     />
     <meta name="twitter:image" content="https://cotton.xyz/assets/cotton-logo.png" />
 
@@ -39,7 +39,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=3" />
+    <link rel="stylesheet" href="./styles.css?v=4" />
   </head>
   <body>
     <div class="bg-orb orb-1"></div>
@@ -50,10 +50,11 @@
         <img src="./assets/cotton-logo.png" alt="cotton.xyz" width="780" height="192" />
       </a>
       <nav>
-        <a href="#about">About</a>
+        <a href="#vision">Vision</a>
+        <a href="#access">Access</a>
         <a href="#preview">Preview</a>
       </nav>
-      <a class="launch-app" href="#preview">
+      <a class="launch-app" href="./app.html">
         Testnet Preview
         <span>App coming soon</span>
       </a>
@@ -61,66 +62,122 @@
 
     <main id="top">
       <section class="container hero">
-        <p class="kicker">cotton.xyz</p>
-        <h1>Cotton perpetuals, always on.</h1>
-        <p class="lead">
-          The first exchange purpose-built for cotton risk — anchored to
-          <strong>ICE Cotton No. 2</strong>, settled in <strong>USDC</strong>, and designed to
-          keep trading when traditional markets are closed.
+        <p class="kicker">Vision</p>
+        <h1>From ancient crop to open global markets.</h1>
+        <p class="lead lead-wide">
+          For thousands of years, cotton has fed, clothed, and connected civilizations — yet
+          access to fair, global pricing has remained concentrated in hands far from the field.
+          <strong>cotton.xyz</strong> exists to change that: bringing cotton’s benchmark price
+          and risk tools to growers, cooperatives, and merchants everywhere — on modern rails
+          that never close.
         </p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="./app.html">Try testnet preview</a>
           <a class="btn btn-secondary" href="./whitepaper.html">Read white paper</a>
         </div>
         <p class="hero-note">
-          Mainnet app coming soon. Preview uses simulated data — not live trading or real funds.
+          Mainnet coming soon. Preview uses simulated data — not live trading or real funds.
         </p>
       </section>
 
-      <section class="container grid-3" id="about">
-        <article class="card">
-          <h2>The gap</h2>
-          <p>
-            Cotton is a ~$45B global market, yet hedging still depends on session-bound venues
-            and fragmented regional basis. There is no dedicated 24/7 cotton perp built for how
-            the industry actually operates.
-          </p>
-        </article>
-        <article class="card">
-          <h2>What we build</h2>
-          <p>
-            A cotton perpetual DEX on <strong>Arbitrum</strong>: USDC collateral, ICE-referenced
-            marks, and a pricing engine that uses order-book signals when external feeds go
-            quiet — so the market does not sleep when ICE does.
-          </p>
-        </article>
-        <article class="card">
-          <h2>Status</h2>
-          <p>
-            <strong>Soft launch in progress.</strong> Testnet preview is live for UX and
-            pricing demos. Smart contracts and on-chain trading are not yet public. Details
-            for investors and partners are in our white paper.
-          </p>
-        </article>
+      <section class="container vision-banner" id="vision">
+        <blockquote class="vision-quote">
+          Every farmer — in Texas, Bahia, or New South Wales — deserves the same access to
+          global cotton markets and transparent pricing that the largest merchants have enjoyed
+          for generations.
+        </blockquote>
+        <p class="vision-body">
+          We are not replacing cotton’s history. We are extending it. cotton.xyz combines the
+          world’s most trusted cotton benchmark — <strong>ICE Cotton No. 2</strong> — with
+          always-on digital infrastructure so participants can hedge, trade, and plan without
+          waiting for session bells or middlemen alone to set the tone.
+        </p>
       </section>
 
       <section class="container">
-        <h2>Built for commodity users</h2>
+        <h2>Then &amp; now</h2>
+        <div class="grid-2 contrast-grid">
+          <article class="card contrast-card contrast-old">
+            <p class="contrast-label">For centuries</p>
+            <ul>
+              <li>Local prices, distant benchmarks</li>
+              <li>Trading hours that ignore harvest urgency</li>
+              <li>Complex access through layers of intermediaries</li>
+              <li>Regional basis risk opaque to small holders</li>
+            </ul>
+          </article>
+          <article class="card contrast-card contrast-new">
+            <p class="contrast-label">With cotton.xyz</p>
+            <ul>
+              <li>Global ICE reference, reachable from anywhere</li>
+              <li>Markets that stay open — ICE Oracle when live, Order Book when it is not</li>
+              <li>Simple USDC settlement and email-first sign-in on testnet</li>
+              <li>A path toward origin-aware markets as the network grows</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="container" id="access">
+        <h2>Who we serve</h2>
+        <p class="section-lead">
+          Our north star is the producer and the regional operator — not only the trading desk.
+        </p>
+        <div class="grid-3">
+          <article class="card pillar-card">
+            <h3>Farmers &amp; growers</h3>
+            <p>
+              A fairer path to global benchmark pricing and hedging tools — without requiring
+              a broker network or crypto expertise to begin learning the product.
+            </p>
+          </article>
+          <article class="card pillar-card">
+            <h3>Co-ops &amp; merchants</h3>
+            <p>
+              Manage basis and benchmark risk around the clock — aligned to how cotton actually
+              moves across borders and seasons.
+            </p>
+          </article>
+          <article class="card pillar-card">
+            <h3>Global participants</h3>
+            <p>
+              Speculators and funds add liquidity and depth — helping tighten spreads for everyone
+              who depends on a functioning cotton market.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="container">
+        <h2>What we are building</h2>
         <ol class="steps compact-steps">
-          <li><strong>Vertical focus</strong> — cotton only, not a generic perp clone.</li>
-          <li><strong>Simple collateral</strong> — USDC, with email-first onboarding on testnet.</li>
-          <li><strong>Pricing</strong> — ICE Oracle when live, Order Book when it is not.</li>
+          <li>
+            <strong>A cotton-only exchange</strong> — perpetual contracts on Arbitrum, collateral
+            in USDC, designed for commodity users first.
+          </li>
+          <li>
+            <strong>Trustworthy pricing</strong> — ICE Oracle when live, Order Book when it is
+            not; built for nights, weekends, and harvest weeks.
+          </li>
+          <li>
+            <strong>Access that scales</strong> — from testnet preview today toward mainnet,
+            local languages, and regional origin markets over time.
+          </li>
         </ol>
+        <p class="section-footnote">
+          Soft launch in progress. Technical architecture and research are described in our
+          <a href="./whitepaper.html">white paper</a>.
+        </p>
       </section>
 
       <section class="container preview-section" id="preview">
         <div class="preview-card">
           <div>
             <p class="kicker">Testnet preview</p>
-            <h2>Experience the app before launch</h2>
+            <h2>See the future of cotton trading</h2>
             <p>
-              Sign in with email, view simulated 24/7 marks, and explore the trade and earn
-              interfaces. This preview is for product feedback only.
+              Sign in with email, explore the trade terminal and earn interface, and experience
+              how simple global cotton markets can feel. Your feedback shapes what we ship.
             </p>
           </div>
           <div class="preview-actions">
@@ -132,7 +189,7 @@
     </main>
 
     <footer class="container footer">
-      <p>© <span id="year"></span> cotton.xyz</p>
+      <p>© <span id="year"></span> cotton.xyz — Cotton belongs to the world.</p>
       <p class="footer-disclaimer">
         This site is for informational purposes only. Nothing here is an offer to sell or a
         solicitation to buy any token or financial product. Testnet previews use simulated

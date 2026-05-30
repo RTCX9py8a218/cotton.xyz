@@ -276,9 +276,93 @@ body {
 
 h1 {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.15;
+  line-height: 1.12;
   margin: 0.5rem 0 1rem;
-  max-width: 18ch;
+  max-width: 22ch;
+}
+
+.lead-wide {
+  max-width: 68ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.vision-banner {
+  padding: 2rem 0 0.5rem;
+}
+
+.vision-quote {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  border: none;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  line-height: 1.45;
+  font-weight: 600;
+  color: #2c1a45;
+  letter-spacing: -0.02em;
+}
+
+.vision-body {
+  margin: 0;
+  max-width: 68ch;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.contrast-grid {
+  margin-top: 0.5rem;
+}
+
+.contrast-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.contrast-label {
+  margin: 0 0 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contrast-old {
+  background: linear-gradient(160deg, rgba(92, 84, 112, 0.06), #faf9fb);
+}
+
+.contrast-new {
+  background: linear-gradient(160deg, rgba(110, 67, 184, 0.1), rgba(232, 64, 165, 0.05));
+  border-color: rgba(110, 67, 184, 0.22);
+}
+
+.pillar-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.08rem;
+}
+
+.pillar-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.section-footnote {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.section-footnote a {
+  color: var(--violet);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-footnote a:hover {
+  text-decoration: underline;
 }
 
 .lead {
@@ -329,6 +413,35 @@ h2 {
   gap: 1rem;
 }
 
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.grid-3 .card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.grid-3 .card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.6rem;
+}
+
+.compact-steps li {
+  padding: 0.75rem 1rem;
+}
+
+.footer-disclaimer {
+  font-size: 0.82rem;
+  max-width: 62ch;
+  line-height: 1.5;
+  margin: 0.35rem 0 0;
+}
+
 .card {
   padding: 1.2rem;
 }
@@ -368,6 +481,7 @@ li {
 
 @media (max-width: 900px) {
   .grid-2,
+  .grid-3,
   .hero-stats {
     grid-template-columns: 1fr;
   }
